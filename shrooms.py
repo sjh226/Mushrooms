@@ -10,14 +10,15 @@ df = pd.read_csv('mushrooms.csv')
 def df_proc(df):
     # not using 'stalk-root' as this has missing values
     # trying to only use easily identifyable features
+    # still able to get essentially 100% accuracy without features below
     # 'gill-attachment', 'gill-spacing', 'gill-size',
     # 'stalk-surface-above-ring','stalk-surface-below-ring'
-    # 'spore-print-color', 'population'
+    # 'spore-print-color', 'population', 'cap-shape'
+    # 'veil-type', 'veil-color', 'stalk-color-below-ring'
     y = df['class'].values
-    columns = ['cap-shape', 'cap-surface', 'cap-color', 'bruises',\
-       'odor', 'gill-color', 'stalk-shape', 'stalk-color-above-ring',\
-       'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number',\
-       'ring-type', 'habitat']
+    columns = ['cap-surface', 'cap-color', 'bruises', 'odor', 'gill-color',\
+               'stalk-shape', 'stalk-color-above-ring', 'ring-number',\
+               'ring-type', 'habitat']
     df = df[columns]
     df = pd.get_dummies(df, columns=columns)
     X = df.values
@@ -39,11 +40,16 @@ def feat_imp(df, rfc):
     left = list(range(0, len(rfc.feature_importances_), 1))
     plt.bar(left, rfc.feature_importances_, width=1, align='center')
     plt.xticks(left, df.columns, rotation='vertical', fontsize=7)
+    plt.title('Mushroom Feature Importance')
+    plt.xlabel('Feature')
+    plt.ylabel('% Importance')
     plt.tight_layout()
-    plt.savefig('feat_imp.png')
+    plt.savefig('limited_feat_imp.png')
 
 
 if __name__ == '__main__':
     X, y, dum_df = df_proc(df)
     rfc = rf(X, y)
     feat_imp(dum_df, rfc)
+    # odor, ring type, and bruises continue to come back as most important
+    # features
