@@ -25,7 +25,7 @@ Eliminating a large amount of features, I maintained an accuracy of essentially 
 #### Results
 
 Looking into the feature importances of my model, it was learned that odor, bruising,
-ring type are critical to the success of my model. I believe all of these are fairly
+ring type, and gill color are critical to the success of my model. I believe all of these are fairly
 easy to identify in the wild. This would allow me to create a simple app in the future
 to be used by individuals to identify certain mushrooms. The feature importances of
 my final model are displayed in the graph below.
